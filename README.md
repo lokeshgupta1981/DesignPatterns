@@ -1,4 +1,4 @@
-# designpatterns
+# Design Patterns
 Sharing Design Patterns Knowledge
 
 
