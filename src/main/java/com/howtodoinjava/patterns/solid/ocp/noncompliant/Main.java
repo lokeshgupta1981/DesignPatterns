@@ -1,4 +1,7 @@
-package com.howtodoinjava.solid.ocp.compliant;
+package com.howtodoinjava.patterns.solid.ocp.noncompliant;
+
+import com.howtodoinjava.patterns.solid.ocp.compliant.ExcelReport;
+import com.howtodoinjava.patterns.solid.ocp.compliant.PdfReport;
 
 public class Main {
 
@@ -8,7 +11,5 @@ public class Main {
 
     generator.generate(new PdfReport(null));
     generator.generate(new ExcelReport(null));
-
-    generator.generate(new HtmlReport(null));
   }
 }

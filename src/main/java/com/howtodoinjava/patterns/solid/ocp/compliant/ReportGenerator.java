@@ -1,4 +1,4 @@
-package com.howtodoinjava.solid.ocp.compliant;
+package com.howtodoinjava.patterns.solid.ocp.compliant;
 
 public class ReportGenerator {
 
