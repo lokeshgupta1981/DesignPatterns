@@ -20,6 +20,12 @@ public final class ReportRequest {
         includeDetails = builder.includeDetails;
     }
 
+    public LocalDate getStartDate() { return startDate; }
+    public LocalDate getEndDate() { return endDate; }
+    public Format getFormat() { return format; }
+    public String getRegion() { return region; }
+    public boolean isIncludeDetails() { return includeDetails; }
+
     @Override
     public String toString() {
         return startDate + " to " + endDate + " format=" + format
