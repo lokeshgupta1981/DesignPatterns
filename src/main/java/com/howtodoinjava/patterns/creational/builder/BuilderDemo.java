@@ -1,23 +1,34 @@
 package com.howtodoinjava.patterns.creational.builder;
 
+import java.time.LocalDate;
+
 public class BuilderDemo {
     public static void main(String[] args) {
-        User complete = new User.Builder("Lokesh", "Gupta")
-                .age(30).phone("1234567").build();
-        User namesOnly = new User.Builder("Jack", "Reacher").build();
+        ReportRequest detailed = new ReportRequest.Builder(
+                LocalDate.of(2026, 10, 1), LocalDate.of(2026, 10, 31))
+                .format(ReportRequest.Format.PDF)
+                .region("EU")
+                .includeDetails(true)
+                .build();
+        ReportRequest basic = new ReportRequest.Builder(
+                LocalDate.of(2026, 9, 1), LocalDate.of(2026, 9, 30))
+                .build();
 
-        System.out.println(complete);
-        System.out.println(namesOnly);
+        System.out.println(detailed);
+        System.out.println(basic);
 
         try {
-            new User.Builder("", "Gupta");
-        } catch (IllegalArgumentException e) {
-            System.out.println("Invalid name: " + e.getMessage());
+            new ReportRequest.Builder(
+                    LocalDate.of(2026, 10, 31), LocalDate.of(2026, 10, 1)).build();
+        } catch (IllegalArgumentException exception) {
+            System.out.println("Invalid dates: " + exception.getMessage());
         }
         try {
-            new User.Builder("Jane", "Doe").age(-1);
-        } catch (IllegalArgumentException e) {
-            System.out.println("Invalid age: " + e.getMessage());
+            new ReportRequest.Builder(
+                    LocalDate.of(2026, 10, 1), LocalDate.of(2026, 10, 31))
+                    .region(" ");
+        } catch (IllegalArgumentException exception) {
+            System.out.println("Invalid region: " + exception.getMessage());
         }
     }
 }

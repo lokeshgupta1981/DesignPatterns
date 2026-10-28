@@ -9,4 +9,4 @@ javac -d out src/main/java/com/howtodoinjava/patterns/creational/builder/*.java
 java -cp out com.howtodoinjava.patterns.creational.builder.BuilderDemo
 ```
 
-The example uses only the JDK. The program builds two users and reports two rejected values.
+The example uses only the JDK. The program builds two report requests and reports two rejected configurations. It constructs request data; it does not generate a report file.
