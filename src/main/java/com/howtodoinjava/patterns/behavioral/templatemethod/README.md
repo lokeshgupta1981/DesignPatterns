@@ -1,12 +1,12 @@
-# Template Method example
+# Template Method: shipping quotes
 
-Source code for the article https://howtodoinjava.com/design-patterns/behavioral/template-method-pattern/
+JDK 17 or later. Rates are illustrative currency units, not carrier tariffs.
 
-From the repository root:
-
-```bash
-javac -d out src/main/java/com/howtodoinjava/patterns/behavioral/templatemethod/TemplateMethodDemo.java
+```shell
+javac -d out src/main/java/com/howtodoinjava/patterns/behavioral/templatemethod/*.java
 java -cp out com.howtodoinjava.patterns.behavioral.templatemethod.TemplateMethodDemo
 ```
 
-The example uses only the JDK.
+The final quote operation validates, calculates a base charge, calls an optional surcharge hook and rounds the result. Standard shipping inherits the zero surcharge; express shipping adds 2.00 during peak periods. Invalid weight is rejected before either extension method runs.
+
+Article: https://howtodoinjava.com/design-patterns/behavioral/template-method-pattern/
