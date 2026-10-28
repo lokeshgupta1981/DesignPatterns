@@ -1,12 +1,12 @@
-# Abstract Factory example
+# Abstract Factory: notes backup and restore
 
-Source code for the article https://howtodoinjava.com/design-patterns/creational/abstract-factory-design-pattern-in-java/
+JDK 17 or later. From the repository root:
 
-From the repository root, run:
-
-```bash
-javac -d target/classes src/main/java/com/howtodoinjava/patterns/creational/abstractfactory/AbstractFactoryDemo.java
-java -cp target/classes com.howtodoinjava.patterns.creational.abstractfactory.AbstractFactoryDemo
+```shell
+javac -encoding UTF-8 -d out src/main/java/com/howtodoinjava/patterns/creational/abstractfactory/*.java
+java -cp out com.howtodoinjava.patterns.creational.abstractfactory.AbstractFactoryDemo
 ```
 
-The example creates matching left-hand-drive and right-hand-drive parts, then rejects a deliberately inconsistent factory.
+TextBackupFactory creates a UTF-8 writer/reader pair. GzipBackupFactory creates a GZIP writer/reader pair. BackupService receives one factory and uses both products. The demo checks Unicode round trips, an empty note, and a text backup passed to the GZIP reader.
+
+This is an in-memory example for small trusted notes. It does not implement persistent storage, automatic format detection, encryption, or bounded streaming. Select the matching format when restoring saved data. The common interfaces do not enforce family membership at compile time.
