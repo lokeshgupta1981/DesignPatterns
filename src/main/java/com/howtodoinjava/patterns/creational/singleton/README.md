@@ -9,4 +9,4 @@ javac -d out src/main/java/com/howtodoinjava/patterns/creational/singleton/*.jav
 java -cp out com.howtodoinjava.patterns.creational.singleton.SingletonDemo
 ```
 
-The same commands work with a current JDK. The program prints identity checks and catalog values for the enum and holder variants.
+The same commands work with a current JDK. The program checks that each variant returns one shared instance and assigns consecutive order numbers through two references. Each variant has its own sequence, which starts at 1 on each run. These in-memory numbers are for demonstrating the pattern; they are not durable or unique across JVM processes.

@@ -2,14 +2,14 @@ package com.howtodoinjava.patterns.creational.singleton;
 
 public class SingletonDemo {
     public static void main(String[] args) {
-        OrderCatalog first = OrderCatalog.INSTANCE;
-        OrderCatalog second = OrderCatalog.INSTANCE;
+        OrderNumberGenerator first = OrderNumberGenerator.INSTANCE;
+        OrderNumberGenerator second = OrderNumberGenerator.INSTANCE;
         System.out.println("enum same instance: " + (first == second));
-        System.out.println("order currency: " + first.currencyCode());
+        System.out.println("enum order numbers: " + first.nextNumber() + ", " + second.nextNumber());
 
-        LazyCatalog lazyFirst = LazyCatalog.getInstance();
-        LazyCatalog lazySecond = LazyCatalog.getInstance();
+        LazyOrderNumberGenerator lazyFirst = LazyOrderNumberGenerator.getInstance();
+        LazyOrderNumberGenerator lazySecond = LazyOrderNumberGenerator.getInstance();
         System.out.println("holder same instance: " + (lazyFirst == lazySecond));
-        System.out.println("holder currency: " + lazyFirst.currencyCode());
+        System.out.println("holder order numbers: " + lazyFirst.nextNumber() + ", " + lazySecond.nextNumber());
     }
 }
