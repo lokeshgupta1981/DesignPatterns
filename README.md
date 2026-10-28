@@ -8,3 +8,4 @@
 - [Memento Pattern](https://howtodoinjava.com/design-patterns/behavioral/memento-design-pattern/) - [article snapshot example](src/main/java/com/howtodoinjava/patterns/behavioral/memento)
 - [Iterator Pattern](https://howtodoinjava.com/design-patterns/behavioral/iterator-design-pattern/) - [custom iterable example](src/main/java/com/howtodoinjava/patterns/behavioral/iterator)
 - [Proxy Pattern](https://howtodoinjava.com/design-patterns/structural/proxy-design-pattern/) - [lazy report example](src/main/java/com/howtodoinjava/patterns/structural/proxy)
+- [Flyweight Pattern](https://howtodoinjava.com/design-patterns/structural/flyweight-design-pattern/) - [shared pen example](src/main/java/com/howtodoinjava/patterns/structural/flyweight)
