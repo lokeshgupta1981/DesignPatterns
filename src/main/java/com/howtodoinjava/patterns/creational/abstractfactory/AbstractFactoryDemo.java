@@ -1,69 +1,19 @@
 package com.howtodoinjava.patterns.creational.abstractfactory;
 
-interface Steering {
-    String layout();
-}
-
-interface Dashboard {
-    String layout();
-}
-
-record LeftSteering() implements Steering {
-    public String layout() { return "Left-hand drive"; }
-}
-
-record RightSteering() implements Steering {
-    public String layout() { return "Right-hand drive"; }
-}
-
-record LeftDashboard() implements Dashboard {
-    public String layout() { return "Left-hand drive"; }
-}
-
-record RightDashboard() implements Dashboard {
-    public String layout() { return "Right-hand drive"; }
-}
-
-interface CarPartsFactory {
-    Steering createSteering();
-    Dashboard createDashboard();
-}
-
-final class LeftDriveFactory implements CarPartsFactory {
-    public Steering createSteering() { return new LeftSteering(); }
-    public Dashboard createDashboard() { return new LeftDashboard(); }
-}
-
-final class RightDriveFactory implements CarPartsFactory {
-    public Steering createSteering() { return new RightSteering(); }
-    public Dashboard createDashboard() { return new RightDashboard(); }
-}
-
-final class CarAssembly {
-    String assemble(CarPartsFactory factory) {
-        Steering steering = factory.createSteering();
-        Dashboard dashboard = factory.createDashboard();
-        if (!steering.layout().equals(dashboard.layout())) {
-            throw new IllegalArgumentException("Steering and dashboard layouts differ");
-        }
-        return steering.layout() + " steering with " + dashboard.layout() + " dashboard";
-    }
-}
+import java.io.IOException;
 
 public class AbstractFactoryDemo {
-    public static void main(String[] args) {
-        CarAssembly assembly = new CarAssembly();
-        System.out.println(assembly.assemble(new LeftDriveFactory()));
-        System.out.println(assembly.assemble(new RightDriveFactory()));
-
-        CarPartsFactory brokenFactory = new CarPartsFactory() {
-            public Steering createSteering() { return new LeftSteering(); }
-            public Dashboard createDashboard() { return new RightDashboard(); }
-        };
+    public static void main(String[] args) throws IOException {
+        String note = "Meeting at 10:00 - café";
+        BackupService text = new BackupService(new TextBackupFactory());
+        BackupService gzip = new BackupService(new GzipBackupFactory());
+        System.out.println("Text restored: " + text.restore(text.backup(note)));
+        System.out.println("GZIP restored: " + gzip.restore(gzip.backup(note)));
+        System.out.println("Empty note restored: " + gzip.restore(gzip.backup("")).isEmpty());
         try {
-            assembly.assemble(brokenFactory);
-        } catch (IllegalArgumentException exception) {
-            System.out.println("Rejected mismatched parts: " + exception.getMessage());
+            gzip.restore(text.backup(note));
+        } catch (IOException exception) {
+            System.out.println("Wrong reader: incompatible backup rejected");
         }
     }
 }

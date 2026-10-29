@@ -1,43 +1,28 @@
 package com.howtodoinjava.patterns.behavioral.chainofresponsibility;
 
-import java.util.Objects;
+import java.math.BigDecimal;
+import java.util.Optional;
 
 public class ChainDemo {
     public static void main(String[] args) {
-        SupportHandler manager = new SupportHandler("Manager", 3, null);
-        SupportHandler supervisor = new SupportHandler("Supervisor", 2, manager);
-        SupportHandler frontDesk = new SupportHandler("Front desk", 1, supervisor);
-
-        System.out.println(frontDesk.handle(1));
-        System.out.println(frontDesk.handle(3));
-        System.out.println(frontDesk.handle(4));
-    }
-}
-
-final class SupportHandler {
-    private final String name;
-    private final int maximumLevel;
-    private final SupportHandler next;
-
-    SupportHandler(String name, int maximumLevel, SupportHandler next) {
-        this.name = Objects.requireNonNull(name);
-        if (maximumLevel < 1) {
-            throw new IllegalArgumentException("Maximum level must be positive");
+        DiscountHandler chain = new CouponHandler(new LoyaltyHandler(null));
+        DiscountRequest both = new DiscountRequest(new BigDecimal("100.00"), "SAVE10", true);
+        show("Coupon and member", chain.handle(both));
+        show("Member only", chain.handle(new DiscountRequest(new BigDecimal("100.00"), "", true)));
+        show("No eligible rule", chain.handle(new DiscountRequest(new BigDecimal("100.00"), "", false)));
+        DiscountHandler reversed = new LoyaltyHandler(new CouponHandler(null));
+        show("Reversed order", reversed.handle(both));
+        try {
+            new DiscountRequest(BigDecimal.ZERO, "", false);
+        } catch (IllegalArgumentException exception) {
+            System.out.println("Invalid request: " + exception.getMessage());
         }
-        this.maximumLevel = maximumLevel;
-        this.next = next;
     }
 
-    String handle(int requestLevel) {
-        if (requestLevel < 1) {
-            throw new IllegalArgumentException("Request level must be positive");
-        }
-        if (requestLevel <= maximumLevel) {
-            return name + " handled level " + requestLevel;
-        }
-        if (next != null) {
-            return next.handle(requestLevel);
-        }
-        return "No handler for level " + requestLevel;
+    private static void show(String label, Optional<Discount> result) {
+        String description = result
+                .map(discount -> discount.rule() + " discount " + discount.amount())
+                .orElse("No discount");
+        System.out.println(label + ": " + description);
     }
 }

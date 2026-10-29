@@ -1,12 +1,12 @@
-# Visitor Pattern
+# Visitor: document export and statistics
 
-Source code for the article https://howtodoinjava.com/design-patterns/behavioral/visitor-design-pattern-example-tutorial/
+JDK 17 or later.
 
-From the repository root:
-
-```bash
-javac -d out src/main/java/com/howtodoinjava/patterns/behavioral/visitor/VisitorDemo.java
+```shell
+javac -d out src/main/java/com/howtodoinjava/patterns/behavioral/visitor/*.java
 java -cp out com.howtodoinjava.patterns.behavioral.visitor.VisitorDemo
 ```
 
-The example prints a configuration plan for two router types and two visitors. It does not configure network hardware.
+DocumentBlock implementations dispatch to the matching DocumentVisitor overload. TextExportVisitor builds plain text; StatisticsVisitor counts text UTF-16 code units and image blocks. Use fresh visitors for each document because they accumulate state. Traversal is performed by the client loop. Images carry descriptions only; no image file is loaded.
+
+Article: https://howtodoinjava.com/design-patterns/behavioral/visitor-design-pattern-example-tutorial/

@@ -1,61 +1,25 @@
 package com.howtodoinjava.patterns.behavioral.visitor;
 
-interface Router {
-    void accept(RouterVisitor visitor);
-}
-
-final class OfficeRouter implements Router {
-    @Override
-    public void accept(RouterVisitor visitor) {
-        visitor.visit(this);
-    }
-}
-
-final class BranchRouter implements Router {
-    @Override
-    public void accept(RouterVisitor visitor) {
-        visitor.visit(this);
-    }
-}
-
-interface RouterVisitor {
-    void visit(OfficeRouter router);
-    void visit(BranchRouter router);
-}
-
-final class LinuxConfigurator implements RouterVisitor {
-    @Override
-    public void visit(OfficeRouter router) {
-        System.out.println("Linux plan for office router");
-    }
-
-    @Override
-    public void visit(BranchRouter router) {
-        System.out.println("Linux plan for branch router");
-    }
-}
-
-final class MacConfigurator implements RouterVisitor {
-    @Override
-    public void visit(OfficeRouter router) {
-        System.out.println("Mac plan for office router");
-    }
-
-    @Override
-    public void visit(BranchRouter router) {
-        System.out.println("Mac plan for branch router");
-    }
-}
+import java.util.List;
 
 public class VisitorDemo {
     public static void main(String[] args) {
-        Router[] routers = {new OfficeRouter(), new BranchRouter()};
-        RouterVisitor linux = new LinuxConfigurator();
-        RouterVisitor mac = new MacConfigurator();
-
-        for (Router router : routers) {
-            router.accept(linux);
-            router.accept(mac);
+        List<DocumentBlock> document = List.of(
+                new TextBlock("Hello"),
+                new ImageBlock("Team photo"),
+                new TextBlock("Java"));
+        TextExportVisitor export = new TextExportVisitor();
+        StatisticsVisitor statistics = new StatisticsVisitor();
+        for (DocumentBlock block : document) {
+            block.accept(export);
+            block.accept(statistics);
         }
+        System.out.print(export.result());
+        System.out.println("Text units: " + statistics.textUnits());
+        System.out.println("Images: " + statistics.images());
+        document.get(0).accept(statistics);
+        System.out.println("After visiting Hello again: " + statistics.textUnits());
+        StatisticsVisitor empty = new StatisticsVisitor();
+        System.out.println("Empty document: " + empty.textUnits() + ", " + empty.images());
     }
 }

@@ -1,18 +1,12 @@
-# Chain of Responsibility
+# Chain of Responsibility: checkout discounts
 
-Source code for the article https://howtodoinjava.com/design-patterns/behavioral/chain-of-responsibility-design-pattern/
+JDK 17 or later. From the repository root:
 
-From the repository root:
-
-```bash
-javac -d out src/main/java/com/howtodoinjava/patterns/behavioral/chainofresponsibility/ChainDemo.java
+```shell
+javac -d out src/main/java/com/howtodoinjava/patterns/behavioral/chainofresponsibility/*.java
 java -cp out com.howtodoinjava.patterns.behavioral.chainofresponsibility.ChainDemo
 ```
 
-Expected output:
+The policy chooses the first eligible discount: SAVE10 gives 10 percent; membership gives 5 percent. Rates are illustrative. Discounts do not stack. Reversing the order changes the result for a member with the coupon. Optional.empty means no eligible discount; invalid subtotals fail before processing.
 
-```text
-Front desk handled level 1
-Manager handled level 3
-No handler for level 4
-```
+Successor links are private final fields, established in constructors. No coupon database, redemption state or payment processing is implemented. BigDecimal computes a two-decimal discount using HALF_UP rounding; production rounding and eligibility must follow the application's actual policy.
