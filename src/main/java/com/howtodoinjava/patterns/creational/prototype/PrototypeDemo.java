@@ -2,72 +2,34 @@ package com.howtodoinjava.patterns.creational.prototype;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+import com.howtodoinjava.patterns.creational.prototype.Campaign.Section;
 
 public class PrototypeDemo {
     public static void main(String[] args) {
-        Movie template = new Movie("Untitled", List.of("draft"));
-        Movie release = template.copy();
-        release.rename("Night Train");
-        release.addTag("thriller");
+        Campaign template = new Campaign("news@example.com", "Monthly update",
+                List.of(new Section("News", "Add this month's news"),
+                        new Section("Events", "Add upcoming events")));
+
+        Campaign october = template.copy();
+        october.setSubject("October update");
+        october.section(0).setBody("Our new store opens Friday");
 
         System.out.println("Template: " + template);
-        System.out.println("Release: " + release);
-        System.out.println("Different objects: " + (template != release));
+        System.out.println("Copy: " + october);
+        System.out.println("Different campaigns: " + (template != october));
+        System.out.println("Different sections: " + (template.section(0) != october.section(0)));
+        System.out.println("Sender retained: " + template.getSender().equals(october.getSender()));
 
-        ShallowMovie shallowTemplate = new ShallowMovie("Untitled", new ArrayList<>(List.of("draft")));
-        ShallowMovie shallowCopy = shallowTemplate.copy();
-        shallowCopy.addTag("thriller");
-        System.out.println("Shallow template tags: " + shallowTemplate.tags());
-    }
-}
+        Campaign another = template.copy();
+        System.out.println("Another copy: " + another.section(0).getBody());
 
-final class Movie {
-    private String title;
-    private final List<String> tags;
+        List<Section> originalSections = new ArrayList<>();
+        originalSections.add(new Section("News", "Original text"));
+        List<Section> copiedList = new ArrayList<>(originalSections);
+        copiedList.get(0).setBody("Changed through copied list");
 
-    Movie(String title, List<String> tags) {
-        this.title = Objects.requireNonNull(title);
-        this.tags = new ArrayList<>(Objects.requireNonNull(tags));
-    }
-
-    Movie copy() {
-        return new Movie(title, tags);
-    }
-
-    void rename(String title) {
-        this.title = Objects.requireNonNull(title);
-    }
-
-    void addTag(String tag) {
-        tags.add(Objects.requireNonNull(tag));
-    }
-
-    @Override
-    public String toString() {
-        return title + " " + tags;
-    }
-}
-
-// Demonstrates the aliasing bug. Do not use this copy method for independently editable movies.
-final class ShallowMovie {
-    private final String title;
-    private final List<String> tags;
-
-    ShallowMovie(String title, List<String> tags) {
-        this.title = title;
-        this.tags = tags;
-    }
-
-    ShallowMovie copy() {
-        return new ShallowMovie(title, tags);
-    }
-
-    void addTag(String tag) {
-        tags.add(tag);
-    }
-
-    List<String> tags() {
-        return tags;
+        System.out.println("Different lists: " + (originalSections != copiedList));
+        System.out.println("Same section: " + (originalSections.get(0) == copiedList.get(0)));
+        System.out.println("Original section: " + originalSections.get(0).getBody());
     }
 }

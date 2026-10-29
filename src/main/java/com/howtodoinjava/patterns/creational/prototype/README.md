@@ -1,12 +1,15 @@
-# Prototype demo
+# Prototype: duplicate a newsletter campaign
 
-Source code for the article [Prototype Design Pattern in Java](https://howtodoinjava.com/design-patterns/creational/prototype-design-pattern-in-java/).
+Use JDK 17 or later. From the repository root:
 
-From the repository root:
-
-```bash
-javac -d target/prototype-demo src/main/java/com/howtodoinjava/patterns/creational/prototype/PrototypeDemo.java
-java -cp target/prototype-demo com.howtodoinjava.patterns.creational.prototype.PrototypeDemo
+```shell
+javac -d out src/main/java/com/howtodoinjava/patterns/creational/prototype/*.java
+java -cp out com.howtodoinjava.patterns.creational.prototype.PrototypeDemo
+java -cp out com.howtodoinjava.patterns.creational.prototype.RegistryDemo
 ```
 
-`Movie.copy()` makes a new tag list. `ShallowMovie.copy()` intentionally shares its list to demonstrate the copying bug; do not use it for independently editable copies.
+`Campaign.copy()` copies the campaign, list and mutable sections. Immutable string values can be shared. Editing the October copy leaves the original template unchanged.
+
+The last part of `PrototypeDemo` intentionally copies only a list. Its output shows two different lists containing the same mutable section, so changing that section through one list is visible through the other.
+
+`RegistryDemo` selects a stored campaign and copies it before changing its subject. It prints `Template: Monthly update` and `Draft: November update`. The registry is an optional way to select a prototype, not a requirement of the pattern.
